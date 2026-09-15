@@ -80,19 +80,22 @@ const [showRegister, setShowRegister] = useState(false);
             setLoading(true);
             const token = localStorage.getItem("token");
 
-            const response = awaitfetch(`${API_URL}/api/urls`,
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${token}`
-                    },
-                   body: JSON.stringify({
-    originalUrl: url,
-    expiresAt: expiresAt || null
-})
-                }
-            );
+
+const response = await fetch(
+    `${API_URL}/api/urls`,
+    {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({
+            originalUrl: url,
+            expiresAt: expiresAt || null
+        })
+    }
+);
+          
 
             const data = await response.json();
 
