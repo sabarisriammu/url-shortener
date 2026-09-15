@@ -15,6 +15,7 @@ const [isLoggedIn, setIsLoggedIn] = useState(
 );
 const [showRegister, setShowRegister] = useState(false);
     const token = localStorage.getItem("token");
+    const API_URL = import.meta.env.VITE_API_URL;
 
    const fetchMyUrls = async () => {
     try {
@@ -25,8 +26,7 @@ const [showRegister, setShowRegister] = useState(false);
             return;
         }
 
-        const response = await fetch(
-            "http://localhost:5000/api/urls/my",
+        const response = await fetch(`${API_URL}/api/urls/my`,
             {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -80,8 +80,7 @@ const [showRegister, setShowRegister] = useState(false);
             setLoading(true);
             const token = localStorage.getItem("token");
 
-            const response = await fetch(
-                "http://localhost:5000/api/urls",
+            const response = awaitfetch(`${API_URL}/api/urls`,
                 {
                     method: "POST",
                     headers: {
@@ -111,7 +110,7 @@ fetchMyUrls();
         }
     };
     const copyUrl = async (shortCode) => {
-    const shortUrl = `http://localhost:5000/${shortCode}`;
+   const shortUrl = `${API_URL}/${shortCode}`;
 
     try {
         await navigator.clipboard.writeText(shortUrl);
@@ -149,8 +148,7 @@ const deleteUrl = async (id) => {
     try {
         const token = localStorage.getItem("token");
 
-        const response = await fetch(
-            `http://localhost:5000/api/urls/${id}`,
+        const response = await fetch(`${API_URL}/api/urls/${id}`,
             {
                 method: "DELETE",
                 headers: {
@@ -426,13 +424,12 @@ if (!isLoggedIn) {
 
                                         <div>
                                             <a
-                                                href={`http://localhost:5000/${item.shortCode}`}
+                                               href={`${API_URL}/${item.shortCode}`}
                                                 target="_blank"
                                                 rel="noreferrer"
                                                 className="short-link"
                                             >
-                                                localhost:5000/
-                                                {item.shortCode}
+                                                {API_URL.replace(/^https?:\/\//, "")}/{item.shortCode}
                                             </a>
 
                                             <p>
